@@ -1,0 +1,11 @@
+{
+  "extends": "airbnb-base",
+  "rules": {
+    "import/no-dynamic-require": 0,
+    "quote-props": ["error", "consistent"],
+    "quotes": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "comma-dangle": ["error", "never"],
+    "no-unused-vars": "off"
+  }
+}
