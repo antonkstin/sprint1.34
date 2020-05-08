@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require(path.join(__dirname, '../models/user'));
-const alohomora = '1dbdc66c9d8935c22ef83c75c6d7ca64';
+const alohomora = require('../alohomora');
 
 function login(req, res) {
   const { email, password } = req.body;

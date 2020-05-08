@@ -6,12 +6,12 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
     validate: {
       validator(email) {
         return validator.isEmail(email);
       }
-    },
-    unique: true
+    }
   },
   password: {
     type: String,

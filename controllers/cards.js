@@ -3,9 +3,23 @@ const path = require('path');
 const Card = require(path.join(__dirname, '../models/card'));
 
 function deleteCard(req, res) {
-  Card.findByIdAndRemove(req.params.id)
-    .then((card) => res.send(`Вы только что удалили карточку ${card}`))
-    .catch((err) => res.status(500).send('Не удалось удалить карточку'));
+  Card.findById(req.params.id)
+    .then((card) => {
+      if (req.user._id !== card.owner.toString()) {
+        return Promise.reject(new Error(`Вы не можете удалять чужие карточки`));
+      }
+      return card._id;
+    })
+    .then((cardId) => {
+      Card.findByIdAndRemove(cardId)
+        .then((card) => {
+          res.send(`Вы только что удалили карточку ${card}`);
+        })
+        .catch((err) => res.status(500).send('Не удалось удалить карточку'));
+    })
+    .catch((err) => {
+      res.status(403).send({ "message": err.message });
+    });
 }
 
 function createCard(req, res) {

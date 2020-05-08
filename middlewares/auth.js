@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const alohomora = '1dbdc66c9d8935c22ef83c75c6d7ca64';
+const alohomora = require('../alohomora');
 
 function auth(req, res, next) {
   const { authorization } = req.headers;

@@ -6,9 +6,8 @@ const cookieParser = require('cookie-parser');
 const userRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
-const auth = require('./middlewares/auth');
+const { auth } = require('./middlewares/auth');
 
-const alohomora = '1dbdc66c9d8935c22ef83c75c6d7ca64';
 const { PORT = 3000 } = process.env;
 const errorMessage = { "message": "Запрашиваемый ресурс не найден" };
 const app = express();
