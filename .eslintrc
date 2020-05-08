@@ -6,6 +6,8 @@
     "quotes": "off",
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "comma-dangle": ["error", "never"],
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "func-names": ["error", "never"],
+    "consistent-return": "off"
   }
 }
