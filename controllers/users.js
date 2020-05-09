@@ -21,7 +21,7 @@ function login(req, res) {
 function getUser(req, res) {
   User.findById(req.params.id)
     .then((user) => res.send(user))
-    .catch((err) => res.status(404).send('Нет пользователя с таким id'));
+    .catch((err) => res.status(404).send({ "message": "Нет пользователя с таким id" }));
 }
 
 function createUser(req, res) {
@@ -33,14 +33,15 @@ function createUser(req, res) {
     .then((hash) => User.create({
       email, password: hash, name, about, avatar
     }))
+    .then((user) => User.findById(user._id))
     .then((user) => res.send(user))
-    .catch((err) => res.status(500).send('Не удалось создать пользователя'));
+    .catch((err) => res.status(500).send({ "message": "Серверная ошибка: не удалось создать пользователя" }));
 }
 
 function getUsers(req, res) {
   User.find({})
     .then((users) => res.send(users))
-    .catch((err) => res.status(500).send('Произошла неведомая ошибка'));
+    .catch((err) => res.status(500).send({ "message": "Серверная ошибка: что-то пошло не так" }));
 }
 
 module.exports = {
