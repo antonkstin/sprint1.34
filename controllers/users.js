@@ -20,7 +20,12 @@ function login(req, res) {
 
 function getUser(req, res) {
   User.findById(req.params.id)
-    .then((user) => res.send(user))
+    .then((user) => {
+      if (!user) {
+        return Promise.reject();
+      }
+      res.send(user);
+    })
     .catch((err) => res.status(404).send({ "message": "Нет пользователя с таким id" }));
 }
 
