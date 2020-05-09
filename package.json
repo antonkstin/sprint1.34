@@ -1,6 +1,6 @@
 {
   "name": "sprint13",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "'Создание REST API и связывание JS и DataBase'",
   "main": "app.js",
   "scripts": {
