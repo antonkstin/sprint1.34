@@ -4,8 +4,9 @@ const jwt = require('jsonwebtoken');
 
 const User = require(path.join(__dirname, '../models/user'));
 const alohomora = require('../alohomora');
+const WestCoastCustomError = require('../middlewares/error');
 
-function login(req, res) {
+function login(req, res, next) {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
@@ -13,23 +14,21 @@ function login(req, res) {
       const token = jwt.sign({ _id: user._id }, alohomora, { expiresIn: '7d' });
       res.send(token);
     })
-    .catch((err) => {
-      res.status(401).send({ "message": err.message });
-    });
+    .catch(next);
 }
 
-function getUser(req, res) {
+function getUser(req, res, next) {
   User.findById(req.params.id)
     .then((user) => {
       if (!user) {
-        return Promise.reject();
+        throw new WestCoastCustomError("Поьзователь не найден", 404);
       }
       res.send(user);
     })
-    .catch((err) => res.status(404).send({ "message": "Нет пользователя с таким id" }));
+    .catch(next);
 }
 
-function createUser(req, res) {
+function createUser(req, res, next) {
   const {
     email, password, name, about, avatar
   } = req.body;
@@ -40,13 +39,13 @@ function createUser(req, res) {
     }))
     .then((user) => User.findById(user._id))
     .then((user) => res.send(user))
-    .catch((err) => res.status(500).send({ "message": "Серверная ошибка: не удалось создать пользователя" }));
+    .catch(next);
 }
 
-function getUsers(req, res) {
+function getUsers(req, res, next) {
   User.find({})
     .then((users) => res.send(users))
-    .catch((err) => res.status(500).send({ "message": "Серверная ошибка: что-то пошло не так" }));
+    .catch(next);
 }
 
 module.exports = {

@@ -1,41 +1,40 @@
 const path = require('path');
 
 const Card = require(path.join(__dirname, '../models/card'));
+const WestCoastCustomError = require('../middlewares/error');
 
-function deleteCard(req, res) {
+function deleteCard(req, res, next) {
   Card.findById(req.params.id)
     .then((card) => {
       if (!card) {
-        return Promise.reject(new Error("Карточка не найдена или уже удалена"));
+        throw new WestCoastCustomError("Карточка не найдена", 404);
       }
       if (req.user._id !== card.owner.toString()) {
-        return Promise.reject(new Error("Вы не можете удалять чужие карточки"));
+        throw new WestCoastCustomError("Вы не можете удалять чужие карточки", 403);
       }
-      return card._id;
+      return card;
     })
-    .then((cardId) => {
-      Card.findByIdAndRemove(cardId)
-        .then((card) => {
-          res.send({ "message": "Вы удалили карточку" });
+    .then((card) => {
+      Card.remove(card)
+        .then(() => {
+          res.send({ "message": "Удаление карточки прошло успешно" });
         })
-        .catch((err) => res.status(500).send({ "message": "Серверная ошибка: не удалось удалить карточку" }));
+        .catch(next);
     })
-    .catch((err) => {
-      res.status(403).send({ "message": err.message });
-    });
+    .catch(next);
 }
 
-function createCard(req, res) {
+function createCard(req, res, next) {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send(card))
-    .catch((err) => res.status(500).send({ "message": "Серверная ошибка: не удалось создать карточку" }));
+    .catch(next);
 }
 
-function getCards(req, res) {
+function getCards(req, res, next) {
   Card.find({})
     .then((cards) => res.send(cards))
-    .catch((err) => res.status(500).send({ "message": "Серверная ошибка: что-то пошло не так" }));
+    .catch(next);
 }
 
 module.exports = {
