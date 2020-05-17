@@ -9,11 +9,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    validate: {
-      validator(email) {
-        return validator.isEmail(email);
-      }
-    }
+    validate: validator.isEmail
   },
   password: {
     type: String,
@@ -35,7 +31,7 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     required: true,
-    match: /^https?:\/\/.{2,}\.(gif|jpg|png|svg)$/
+    validate: validator.isURL
   }
 }, { versionKey: false });
 

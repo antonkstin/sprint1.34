@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const WestCoastCustomError = require('./error');
 
 const alohomora = require('../alohomora');
 
@@ -6,7 +7,7 @@ function auth(req, res, next) {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return res.status(401).send({ message: "Необходима авторизация" });
+    throw new WestCoastCustomError("Необходима авторизация", 401);
   }
 
   const token = authorization.replace('Bearer ', '');
@@ -15,7 +16,7 @@ function auth(req, res, next) {
   try {
     payload = jwt.verify(token, alohomora);
   } catch (err) {
-    return res.status(401).send({ message: 'Необходима авторизация' });
+    throw new WestCoastCustomError("Необходима авторизация", 401);
   }
 
   req.user = payload;
