@@ -1,7 +1,7 @@
 {
   "name": "sprint13",
-  "version": "2.0.0",
-  "description": "'Создание REST API и связывание JS и DataBase'",
+  "version": "3.0.5",
+  "description": "Суперсложное и максимально непонятное, наощупь изучаемое, поверхностное задание по выводу сервера в люди",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
