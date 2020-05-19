@@ -42,8 +42,11 @@ function createUser(req, res, next) {
     .then((hash) => User.create({
       email, password: hash, name, about, avatar
     }))
-    .then((user) => User.findById(user._id))
-    .then((user) => res.send(user))
+    .then((user) => {
+      const obj = user.toObject();
+      delete obj.password;
+      res.send(obj);
+    })
     .catch(next);
 }
 
