@@ -35,7 +35,7 @@ app.get('/crash-test', () => {
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required(),
-    password: Joi.string().required()
+    password: Joi.string().required().min(8)
   })
 }), login);
 
@@ -60,7 +60,14 @@ app.use('*', (req, res) => {
 app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message = "На сервере что-то пошло не так..." } = err;
+  const statusCode = err.status || 500;
+  const message = err.message || "На сервере что-то пошло не так...";
+  if (err.name === 'ValidationError' || err.joi) {
+    return res.status(400).send({ "message": `Ошибка валидации: ${err.message}` });
+  }
+  if (err.code === 11000) {
+    return res.status(409).send({ "message": "Данный email уже зарегистрирован" });
+  }
   res.status(statusCode).send({ "message": message });
 });
 
