@@ -1,6 +1,6 @@
 {
   "name": "serverexpress",
-  "version": "3.0.6",
+  "version": "3.0.8",
   "description": "Сервер на express(Node.js) для проекта mesto",
   "main": "app.js",
   "scripts": {
