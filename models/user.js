@@ -31,8 +31,7 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     required: true,
-    validate: validator.isURL,
-    match: /^https?:\/\/\S+(?:jpg|jpeg|png|gif|\d+)$/
+    validate: validator.isURL
   }
 }, { versionKey: false });
 
