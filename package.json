@@ -1,7 +1,7 @@
 {
-  "name": "sprint13",
-  "version": "3.0.5",
-  "description": "Суперсложное и максимально непонятное, наощупь изучаемое, поверхностное задание по выводу сервера в люди",
+  "name": "serverexpress",
+  "version": "3.0.8",
+  "description": "Сервер на express(Node.js) для проекта mesto",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -20,7 +20,6 @@
     "body-parser": "^1.19.0",
     "celebrate": "^12.1.1",
     "cookie-parser": "^1.4.5",
-    "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-winston": "^4.0.3",

@@ -17,7 +17,7 @@ function deleteCard(req, res, next) {
     .then((card) => {
       Card.remove(card)
         .then(() => {
-          res.send({ "message": "Удаление карточки прошло успешно" });
+          res.send(card);
         })
         .catch(next);
     })
